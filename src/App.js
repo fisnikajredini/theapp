@@ -9,8 +9,6 @@ function App() {
     <div className="App">
       <Route exact path="/" component={MainPage}/>
       <Route path="/AddPage" component={AddPage}/>
-      {/* <MainPage /> */}
-      {/* <AddPage/> */}
     </div>
   );
 }

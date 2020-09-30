@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter , Route} from 'react-router-dom'
 import './index.css';
 import App from './App';
-
-import MainPage from './Components/MainPage';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
