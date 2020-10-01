@@ -84,3 +84,9 @@ a{
   padding: 25px !important;
   color: #b1b1b1 !important;
 }
+
+.footer a{
+  color: #b1b1b1 !important;;
+  text-decoration: none !important;
+}
+

@@ -25,7 +25,7 @@ function App() {
             <Route path="/AddCompany" component={AddCompany}/>
           </div>
           <BottomNavigation className="footer">
-            <p>Copyright @ 2B Media 2020. All Rights Reserved</p>
+            <p>Copyright <a href="https://www.linkedin.com/company/2b-media-company/" target="_blank">@2BMedia</a> 2020. All Rights Reserved</p>
           </BottomNavigation>
       </React.Fragment>
     </MuiThemeProvider>
