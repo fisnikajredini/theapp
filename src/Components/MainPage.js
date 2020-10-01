@@ -7,8 +7,8 @@ import Paper from '@material-ui/core/Paper';
 import img1 from './img/plus.png';
 import img2 from './img/search.png';
 import img3 from './img/company.png';
-import Link from '@material-ui/core/Link';
-import AddPage from './AddPage'
+import Link from '@material-ui/core/Link'
+
 
 export class MainPage extends Component {
     render() {
@@ -27,7 +27,7 @@ export class MainPage extends Component {
                     <Container maxWidth="sm">
                     <Grid container spacing={3} style={styles.fgrids}>
                         <Grid item xs={6} sm={6}>
-                        <Link href="/AddPage">
+                        <Link to="/addpage.js">
                             <Paper className="Grid">
                             <img src={img1} className="logo" alt="Plus" />
                             <p className="Title">Додај</p>
