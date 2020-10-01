@@ -1,96 +1,131 @@
-import React from 'react';
+import * as React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Link } from 'react-router-dom';
+import { DropDownList } from '@progress/kendo-react-dropdowns';
+import { dataCategories, dataSubcat } from './data.js';
+import './dropdown.css';
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-    width: 600,
-  },
-}));
+const defaultItemCompany = { companyName: 'Селектирај Фирма ...' };
+const defaultItemCategory = { categoryName: 'Селектирај Категорија ...' };
+const defaultItemSubcat = { subcatName: 'Селектирај Под-Категорија ...' };
 
-export default function GroupedSelect() {
-  const classes = useStyles();
-  return (
-    <div>
-    <MuiThemeProvider>
-    <React.Fragment> 
-            <AppBar 
-            title="Era Consulting"
-            style={styles.banner}
-            id="banner"
-            />
-            <h2 
-            style={styles.subheading}
-            >Додај</h2>
-            <br/>
-            <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="grouped-native-select">Избери Фирма</InputLabel>
-                <Select native defaultValue="" id="grouped-native-select">
-                    <option aria-label="None" value="" />
-                    <option value={1}>Option 1</option>
-                    <option value={2}>Option 2</option>
-                </Select>
-            </FormControl>
-            <br/>
-            <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="grouped-native-select">Категорија</InputLabel>
-                <Select native defaultValue="" id="grouped-native-select">
-                    <option aria-label="None" value="" />
-                    <option value={1}>01 - ОСНОВАЊЕ, ОРГАНИЗАЦИЈА И РАЗВОЈ</option>
-                    <option value={2}>02 - УПРАВУВАЊЕ И РАКОВОДЕЊЕ</option>
-                    <option value={3}>03 - КАНЦЕЛАРИСКО - АРХИВСКИ, ПРАВНИ И ОПШТИ РАБОТИ</option>
-                    <option value={4}>04 - ЧОВЕЧКИ РЕСУРСИ</option>
-                    <option value={5}>05 - ФИНАНСИСКО И МАТЕРИЈАЛНО РАБОТЕЊЕ</option>
-                    <option value={6}>06 - ОДБРАНА И БЕЗБЕДНОСТ</option>
-                    <option value={7}>07 - ЕЛЕКТРОНСКИ СИСТЕМ И АВТОМАТСКА ОБРАБОТКА НА ПОДАТОЦИ (АОП)</option>
-                    <option value={8}>08 - ПОСЕБЕН ДЕЛ</option>
-                </Select>
-            </FormControl>
-            <br/>
-            <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="grouped-native-select">Под-Категорија</InputLabel>
-                <Select native defaultValue="" id="grouped-native-select">
-                <option aria-label="None" value="" />
-                    <option value={1}>Option 1</option>
-                    <option value={1}>Option 2</option>
-                    <option value={2}>Option 3</option>
-                    <option value={2}>Option 4</option>
-                </Select>
-            </FormControl>
-            <br/>
-            <RaisedButton 
-                label="Назад"
-                primary={false}
-                style={styles.button}
-            />
-            <RaisedButton
-                label="Додај"
-                id="button-continue" 
-                primary={true}
-                style={styles.button}
-            />
-    </React.Fragment>
-    </MuiThemeProvider>
-    </div>
-  );
+class AppComponent extends React.Component {
+    state = {
+        category: null,
+        subcat: null,
+        subcats: dataSubcat
+    };
+
+    categoryChange = (event) => {
+        const category = event.target.value;
+        const subcats = dataSubcat.filter(subcat => subcat.categoryId === category.categoryId);
+
+        this.setState({
+            category: category,
+            subcats: subcats,
+            subcat: null,
+        });
+    }
+
+    subcatChange = (event) => {
+        const subcat = event.target.value;
+
+        this.setState({
+            subcat: subcat,
+        });
+    }
+
+
+    render() {
+        const category = this.state.category;
+        const subcat = this.state.subcat;
+
+        const hasCategory = category && category !== defaultItemCategory;
+        const hasSubcat = subcat && subcat !== defaultItemSubcat;
+
+            return (
+                <div>
+                <MuiThemeProvider>
+                <React.Fragment> 
+                        <h2 
+                        style={styles.subheading}
+                        >Додај</h2>
+                        <br/>
+                        <div className="dropdown">
+                            <div style={{ display: 'inline-block' }}>
+                                <p className="Title">Фирма</p>
+                                <DropDownList
+                                    //data={dataCategories}
+                                    textField="defaultItemCompany"
+                                    //onChange={this.categoryChange}
+                                    defaultItem={defaultItemCompany}
+                                    //value={category}
+                                />
+                            </div>
+                            <br />
+                            <div style={{ display: 'inline-block' }}>
+                                <p className="Title">Категорија</p>
+                                <DropDownList
+                                    data={dataCategories}
+                                    textField="categoryName"
+                                    onChange={this.categoryChange}
+                                    defaultItem={defaultItemCategory}
+                                    value={category}
+                                />
+                            </div>
+                            <br />
+                            <div style={{ display: 'inline-block' }}>
+                            <p className="Title">Под-Категорија</p>
+                                <DropDownList
+                                    disabled={!hasCategory}
+                                    data={this.state.subcats}
+                                    textField="subcatName"
+                                    onChange={this.subcatChange}
+                                    defaultItem={defaultItemSubcat}
+                                    value={subcat}
+                                />
+                            </div>
+                            <br />
+                        </div>
+                        <br/>
+                        <Link to="/">
+                        <RaisedButton 
+                            label="Назад"
+                            primary={false}
+                            style={styles.button}
+                        />
+                        </Link>
+                        <RaisedButton
+                            label="Додај"
+                            id="button-continue" 
+                            primary={true}
+                            style={styles.button}
+                        />
+                </React.Fragment>
+                </MuiThemeProvider>
+                </div>
+            );
+        
+          
+        
+        }
+    }
+
+    const styles ={
+        button: {
+            margin: 15,
+        },
+        banner:{
+            backgroundColor: "#3257a8"
+        },
+        subheading: {
+            color: "rgb(136, 136, 136)",
+            fontWeight: "600"
+        },
+        
 }
+document.querySelector('my-app')
 
-const styles ={
-    button: {
-        margin: 15,
-    },
-    banner:{
-        backgroundColor: "#3257a8"
-    },
-    subheading: {
-        color: "rgb(136, 136, 136)",
-        fontWeight: "600"
-    },
-}
+
+export default AppComponent

@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import img1 from './img/plus.png';
 import img2 from './img/search.png';
 import img3 from './img/company.png';
-import Link from '@material-ui/core/Link'
+import { Link } from 'react-router-dom';
 
 
 export class MainPage extends Component {
@@ -15,11 +15,7 @@ export class MainPage extends Component {
         return (
             <MuiThemeProvider>
                 <React.Fragment>
-                    <AppBar 
-                    title="Era Consulting"
-                    style={styles.banner}
-                    id="banner"
-                    />
+                    
                     <h2 
                     style={styles.subheading}
                     >Деловодник</h2>
@@ -27,7 +23,7 @@ export class MainPage extends Component {
                     <Container maxWidth="sm">
                     <Grid container spacing={3} style={styles.fgrids}>
                         <Grid item xs={6} sm={6}>
-                        <Link to="/addpage.js">
+                        <Link to="/AddPage">
                             <Paper className="Grid">
                             <img src={img1} className="logo" alt="Plus" />
                             <p className="Title">Додај</p>
@@ -35,20 +31,20 @@ export class MainPage extends Component {
                         </Link>
                         </Grid>
                         <Grid item xs={6} sm={6}>
-                    <a href="#">   
+                    <Link to="/SearchPage">   
                         <Paper className="Grid">
                         <img src={img2} className="logo" alt="Search" />
                         <p className="Title">Побарај</p>   
                         </Paper>
-                    </a>
+                    </Link>
                         </Grid>
                         <Grid item xs={6} sm={6}>
-                    <a href="#">      
+                    <Link to="/AddCompany">      
                         <Paper className="Grid">
                         <img src={img3} className="logo" alt="Company" />
                         <p className="Title">Додај/Избриши Фирма</p>   
                         </Paper>
-                    </a>
+                    </Link>
                         </Grid>
                     </Grid>
                     </Container>
