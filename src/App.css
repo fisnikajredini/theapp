@@ -77,3 +77,10 @@ a{
 .k-dropdown {
   width: 650px !important;
 }
+
+.footer {
+  text-align: center;
+  font-size: 12px !important;
+  padding: 25px !important;
+  color: #b1b1b1 !important;
+}

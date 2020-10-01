@@ -7,6 +7,7 @@ import SearchPage from './Components/SearchPage';
 import AddCompany from './Components/AddCompany';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
             <Route path="/SearchPage" component={SearchPage}/>
             <Route path="/AddCompany" component={AddCompany}/>
           </div>
+          <BottomNavigation className="footer">
+            <p>Copyright @ 2B Media 2020. All Rights Reserved</p>
+          </BottomNavigation>
       </React.Fragment>
     </MuiThemeProvider>
   );
