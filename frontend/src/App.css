@@ -70,8 +70,16 @@ a{
   text-decoration: none !important;
 }
 
-#button-continue{
+#button-continue, #button-search{
   background-color: #3257a8 !important;
+}
+
+#button-delete {
+  background-color: red !important;
+}
+
+#button-add {
+  background-color: green !important;
 }
 
 .k-dropdown {
@@ -90,3 +98,14 @@ a{
   text-decoration: none !important;
 }
 
+.input-firma .MuiFormControl-root, .company-dropdown, .company-dropdown .k-dropdown {
+  width: 100% !important;
+}
+
+.searchpage-dd .k-dropdown {
+  width: 400px !important;
+}
+
+.k-list-scroller {
+  padding-bottom: 5px !important;
+}
