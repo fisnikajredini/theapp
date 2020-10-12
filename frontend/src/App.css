@@ -36,7 +36,12 @@
     transform: rotate(360deg);
   }
 }
-
+#banner {
+  text-align: center !important;
+  -webkit-box-shadow: 0px 10px 10px 1px rgba(0, 0, 0, 0.75) !important;
+  -moz-box-shadow: 0px 10px 10px 1px rgba(0, 0, 0, 0.75) !important;
+  box-shadow: 0px 10px 10px 1px rgba(0, 0, 0, 0.75) !important;
+}
 #banner button {
   display: none !important;
 }
@@ -48,14 +53,12 @@
 }
 
 .MuiPaper-elevation1:hover {
-  border: 2px solid #efefef!important;
+  border: 2px solid #efefef !important;
   padding: 10px !important;
   box-shadow: 1px 1px #d6d6d6 !important;
   background-color: #f4f5f9;
 }
-#banner {
-  text-align: center !important;
-}
+
 .Title {
   font-size: 18px !important;
   font-weight: 600 !important;
@@ -66,11 +69,12 @@
   padding-top: 20px !important;
 }
 
-a{
+a {
   text-decoration: none !important;
 }
 
-#button-continue, #button-search{
+#button-continue,
+#button-search {
   background-color: #3257a8 !important;
 }
 
@@ -93,12 +97,14 @@ a{
   color: #b1b1b1 !important;
 }
 
-.footer a{
-  color: #b1b1b1 !important;;
+.footer a {
+  color: #b1b1b1 !important;
   text-decoration: none !important;
 }
 
-.input-firma .MuiFormControl-root, .company-dropdown, .company-dropdown .k-dropdown {
+.input-firma .MuiFormControl-root,
+.company-dropdown,
+.company-dropdown .k-dropdown {
   width: 100% !important;
 }
 

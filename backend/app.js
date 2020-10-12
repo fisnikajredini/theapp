@@ -3,6 +3,15 @@ const app = express()
 const port = 5000
 const queries = require("./model/queries")
 const db = require("./db/db")
+const bodyParser = require("body-parser");
+
+app.use(bodyParser.json());
+
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 
 db.initDB()
 
@@ -22,10 +31,35 @@ app.get('/hello', (req, res) => {
 // queries.remove("5f7f42c8befcb23fb0ce5738").then(()=>res.send("success"))
 queries.readAll().then((data)=>{
   res.json({data:data});
-  console.log(data)
+  // console.log(data)
 })
   
 })
+app.post('/hello1',(req,res)=>{
+  let firma = req.body.firma;
+  console.log(firma)
+  queries.createNew({
+        company_name: firma,
+        date: Date.now()
+    })
+      .then(() => {
+            res.json({data:'Fi'});
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(500).send('internal server errorr');
+      })
+})
+
+app.post("/deletecomp",(req,res)=>{
+  let compdel = req.body.delfirma;
+  console.log(compdel)
+  queries.remove(compdel)
+  .then(()=>{
+    res.json({data:"deleted"})
+  })
+})
+
 
 app.listen(port, () => {
 
