@@ -26,7 +26,26 @@ const App: React.FC = () => {
             if  (args.item.id.includes('pdfexport')) {
                 grid.pdfExport({
                     fileName:'Delovodnik.pdf',
-                    exportType: 'CurrentPage'
+                    header: {
+                        fromTop: 0,
+                        height: 130,
+                        contents: [{
+                            type: 'Text',
+                            value: 'Era Consulting',
+                            position: { x: 0, y: 50 },
+                            style: { textBrushColor: '#00000', fontSize: 13 }
+                        }]
+                    },
+                    footer: {
+                        contents: [{
+                            type: 'Text',
+                            value: 'Exported from Delovodnik Application',
+                            position: { x: 0, y: 50 },
+                            style: { textBrushColor: '#00000', fontSize: 13 }
+                        }],
+                        fromBottom: 130,
+                        height: 130,
+                    }
                 });
             } else if(args.item.id.includes('excelexport')) {
                 grid.excelExport({
