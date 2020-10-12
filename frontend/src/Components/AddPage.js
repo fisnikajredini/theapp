@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import RaisedButton from "material-ui/RaisedButton";
 import { Link } from "react-router-dom";
@@ -13,11 +13,14 @@ const defaultItemSubcat = { subcatName: "Селектирај Под-Катег�
 let companyNames = [];
  class AppComponent extends React.Component {
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             category: null,
             subcat: null,
             subcats: dataSubcat,
+            categoryNode:null,
+            subcategoryNode:null,
+            companyNode:"FIRMA 7"
           };
     }
   
@@ -35,6 +38,17 @@ let companyNames = [];
       name: null,
     });
   };
+
+  addPage = () =>{
+    console.log("res")
+    axios.post('/hello1',{firma:this.state.companyNode}).then((res)=>console.log(res))
+//     fetch('/hello1', {
+//   method: 'POST',
+//   body: JSON.stringify({
+//     firma:this.state.companyNode
+//   })
+// })
+  }
 
   subcatChange = (event) => {
     const subcat = event.target.value;
@@ -76,7 +90,7 @@ let companyNames = [];
                   textField="categoryName"
                   onChange={this.categoryChange}
                   defaultItem={defaultItemCategory}
-                  value={category}
+                  // value={dataCategories}
                 />
               </div>
               <br />
@@ -88,7 +102,7 @@ let companyNames = [];
                   textField="subcatName"
                   onChange={this.subcatChange}
                   defaultItem={defaultItemSubcat}
-                  value={subcat}
+                  // value={dataSubcat}
                 />
               </div>
               <br />
@@ -106,6 +120,7 @@ let companyNames = [];
               id="button-continue"
               primary={true}
               style={styles.button}
+              onClick={this.addPage}
             />
           </React.Fragment>
         </MuiThemeProvider>
