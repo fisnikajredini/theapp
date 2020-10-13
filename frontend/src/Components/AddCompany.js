@@ -16,15 +16,15 @@ export class AddCompany extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      CompanyAdd: null,
+      CompanyAdd: "",
       CompanyDel: null,
-      CompanyDelName:null,
+      CompanyDelName: null,
       companyNames: this.props.companyNames,
     };
   }
 
   componentDidMount = () => {
-    axios.get("/hello").then((response) => {
+    axios.get("/getcompany").then((response) => {
       this.setState({ companyNames: response.data.data });
     });
   };
@@ -32,21 +32,24 @@ export class AddCompany extends Component {
   companyChange = (e) => {
     // Swal.fire('Any fool can use a computer')
     this.setState({
-        CompanyDel: e.target.value._id,
-        CompanyDelName: e.target.value.company_name,
+      CompanyDel: e.target.value._id,
+      CompanyDelName: e.target.value.company_name,
     });
     console.log(this.state.CompanyDel);
   };
   deleteCompany = () => {
     Swal.fire({
-      title: "Дали сакате да ја бришете фирмата: "+this.state.CompanyDelName +" ?",
+      title:
+        "Дали сакате да ја бришете фирмата: " +
+        this.state.CompanyDelName +
+        " ?",
       showDenyButton: true,
       confirmButtonText: `ДА`,
       denyButtonText: `НЕ`,
     }).then((result) => {
       if (result.isConfirmed) {
         axios.post("/deletecomp", { delfirma: this.state.CompanyDel }).then(
-          axios.get("/hello").then((response) => {
+          axios.get("/getcompany").then((response) => {
             this.setState({ companyNames: response.data.data });
           })
         );
@@ -64,8 +67,12 @@ export class AddCompany extends Component {
   };
 
   addCompany = () => {
-    if (this.state.CompanyAdd != null && this.state.CompanyAdd != "" && this.state.CompanyAdd != undefined) {
-        axios.post("/hello1", { firma: this.state.CompanyAdd }).then();
+    if (
+      this.state.CompanyAdd != null &&
+      this.state.CompanyAdd != "" &&
+      this.state.CompanyAdd != undefined
+    ) {
+      axios.post("/adcompany", { firma: this.state.CompanyAdd }).then();
       Swal.fire({
         icon: "success",
         confirmButtonText: `OK`,
@@ -73,14 +80,11 @@ export class AddCompany extends Component {
         showConfirmButton: true,
         timer: 1500,
       }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          axios.get("/hello").then((response) => {
+          axios.get("/getcompany").then((response) => {
             this.setState({ companyNames: response.data.data, CompanyAdd: "" });
           });
-        }
+        
       });
-      
     } else {
       Swal.fire({
         icon: "error",
@@ -133,12 +137,12 @@ export class AddCompany extends Component {
                     style={{ display: "inline-block" }}
                   >
                     <DropDownList
-                    id="deletedropdown"
+                      id="deletedropdown"
                       data={this.state.companyNames}
                       textField="company_name"
                       onChange={this.companyChange}
                       defaultItem={defaultItemCompany}
-                    //   value={this.state.companyNames}
+                      //   value={this.state.companyNames}
                     />
                   </div>
                 </Grid>

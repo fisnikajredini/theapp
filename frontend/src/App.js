@@ -11,7 +11,7 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import axios from "axios"
 let companyNames;
 function App() {
-    axios.get("/hello").then((response) => {
+    axios.get("/getcompany").then((response) => {
       companyNames = response.data.data;
     });
   return (

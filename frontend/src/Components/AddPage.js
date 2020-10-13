@@ -6,25 +6,39 @@ import { DropDownList } from "@progress/kendo-react-dropdowns";
 import { dataCategories, dataSubcat } from "./data.js";
 import "./dropdown.css";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const defaultItemCompany = { company_name: "Селектирај Фирма ..." };
 const defaultItemCategory = { categoryName: "Селектирај Категорија ..." };
 const defaultItemSubcat = { subcatName: "Селектирај Под-Категорија ..." };
 let companyNames = [];
- class AppComponent extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            category: null,
-            subcat: null,
-            subcats: dataSubcat,
-            categoryNode:null,
-            subcategoryNode:null,
-            companyNode:"FIRMA 7"
-          };
-    }
-  
-
+class AppComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      companyNames: this.props.companyNames,
+      category: null,
+      subcat: null,
+      subcats: dataSubcat,
+      categoryNode: null,
+      subcategoryNode: null,
+      companyNode: "FIRMA 7",
+      company_name: null,
+      subCategory: null,
+      categoryLife: null,
+    };
+  }
+  componentDidMount = () => {
+    axios.get("/getcompany").then((response) => {
+      this.setState({ companyNames: response.data.data });
+    });
+  };
+  companyChange = (e) => {
+    const companyChange = e.target.value.company_name;
+    this.setState({
+      company_name: companyChange,
+    });
+  };
   categoryChange = (event) => {
     const category = event.target.value;
     const subcats = dataSubcat.filter(
@@ -35,27 +49,53 @@ let companyNames = [];
       category: category,
       subcats: subcats,
       subcat: null,
-      name: null,
     });
   };
-
-  addPage = () =>{
-    console.log("res")
-    axios.post('/hello1',{firma:this.state.companyNode}).then((res)=>console.log(res))
-//     fetch('/hello1', {
-//   method: 'POST',
-//   body: JSON.stringify({
-//     firma:this.state.companyNode
-//   })
-// })
-  }
-
   subcatChange = (event) => {
     const subcat = event.target.value;
-
+    const subCategory = event.target.value.subcatName;
+    const categoryLife = event.target.value.categoryTime;
+    console.log(subcat);
     this.setState({
       subcat: subcat,
+      subCategory: subCategory,
+      categoryLife: categoryLife,
     });
+  };
+  addPage = () => {
+    if (
+      this.state.subCategory === null ||
+      this.state.subCategory === "" ||
+      this.state.subCategory === undefined
+    ) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonText: `OK`,
+        title: "Избирајте ги сите полња",
+        showConfirmButton: true,
+        timer: 1500,
+      });
+    } else {
+      axios
+        .post("/addcategory", {
+          category: this.state.category,
+          company_name: this.state.company_name,
+          subCategory: this.state.subCategory,
+          categoryLife: this.state.categoryLife,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            Swal.fire({
+              icon: "success",
+              confirmButtonText: `OK`,
+              title: "Документот е Додаден",
+              showConfirmButton: true,
+              timer: 1500,
+            });
+          }
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   render() {
@@ -75,9 +115,9 @@ let companyNames = [];
               <div style={{ display: "inline-block" }}>
                 <p className="Title">Фирма</p>
                 <DropDownList
-                  data={this.props.companyNames}
+                  data={this.state.companyNames}
                   textField="company_name"
-                  //onChange={this.categoryChange}
+                  onChange={this.companyChange}
                   defaultItem={defaultItemCompany}
                   // value={data}
                 />
@@ -143,4 +183,4 @@ const styles = {
 };
 document.querySelector("my-app");
 
-export default AppComponent
+export default AppComponent;
