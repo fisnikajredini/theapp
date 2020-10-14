@@ -7,10 +7,13 @@ import {
   Filter,
   Inject,
   FilterSettingsModel,
+  EditSettingsModel,
+  ToolbarItems,
   Grid,
   Toolbar,
   PdfExport,
   ExcelExport,
+  dataSourceChanged,
 } from "@syncfusion/ej2-react-grids";
 import data from "./dataSource.json";
 import "./searchtable.css";
@@ -38,6 +41,8 @@ export default class SearchPage extends React.Component {
     const filterSettings = {
       ignoreAccent: true,
     };
+    const editOptions: EditSettingsModel = {allowDeleting: true}
+    const toolbarOptions: ToolbarItems[] = ['PdfExport', 'ExcelExport', 'Delete'];
 
     let grid: Grid | null;
     const toolbarClick = (args: any) => {
@@ -111,6 +116,12 @@ export default class SearchPage extends React.Component {
       }
     };
 
+
+    function dataSourceChanged(state) {
+      console.log(state);
+    }
+
+
     return (
       <div style={{ margin: "2%", marginTop: "3%", marginBottom: "5%" }}>
         <h2 style={styles.subheading}>Побарај Деловодник</h2>
@@ -122,10 +133,12 @@ export default class SearchPage extends React.Component {
           allowFiltering
           filterSettings={filterSettings}
           pageSettings={{ pageSize: 20 }}
-          toolbar={["PdfExport", "ExcelExport"]}
+          toolbar={toolbarOptions}
           allowPdfExport={true}
           allowExcelExport
           toolbarClick={toolbarClick}
+          editSettings={editOptions}
+          dataSourceChanged={dataSourceChanged}
         >
           <ColumnsDirective>
             { /*<ColumnDirective
