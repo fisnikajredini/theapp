@@ -39,8 +39,8 @@ export default class SearchPage extends React.Component {
       ignoreAccent: true,
     };
 
-    let grid;
-    const toolbarClick = (args) => {
+    let grid: Grid | null;
+    const toolbarClick = (args: any) => {
       if (grid) {
         if (args.item.id.includes("pdfexport")) {
           grid.pdfExport({
@@ -112,7 +112,7 @@ export default class SearchPage extends React.Component {
     };
 
     return (
-      <div style={{ margin: "10%", marginTop: "3%", marginBottom: "5%" }}>
+      <div style={{ margin: "2%", marginTop: "3%", marginBottom: "5%" }}>
         <h2 style={styles.subheading}>Побарај Деловодник</h2>
         <br />
         <GridComponent
@@ -121,14 +121,14 @@ export default class SearchPage extends React.Component {
           allowPaging={true}
           allowFiltering
           filterSettings={filterSettings}
-          pageSettings={{ pageSize: 10 }}
+          pageSettings={{ pageSize: 20 }}
           toolbar={["PdfExport", "ExcelExport"]}
           allowPdfExport={true}
           allowExcelExport
           toolbarClick={toolbarClick}
         >
           <ColumnsDirective>
-            {/* <ColumnDirective
+            { /*<ColumnDirective
               field="_id"
               headerText="ID"
               textAlign="Right"
@@ -138,21 +138,22 @@ export default class SearchPage extends React.Component {
             <ColumnDirective
               field="company_name"
               headerText="Фирма"
+              textAlign="Left"
               width="250"
             />
-            <ColumnDirective field="category" headerText="Категорија" width="250" />
-            <ColumnDirective field="subCategory" headerText="Под-Категорија" width="500" />
+            <ColumnDirective field="category" headerText="Категорија" textAlign="Left" width="250" />
+            <ColumnDirective field="subCategory" headerText="Под-Категорија" textAlign="Left" width="500" />
             <ColumnDirective
               field="date"
               headerText="Датум"
-              textAlign="Right"
-              width="180"
+              textAlign="Left"
+              width="130"
             />
             <ColumnDirective
               field="Life"
               headerText="Рок на чување"
-              textAlign="Right"
-              width="70"
+              textAlign="Left"
+              width="150"
             />
           </ColumnsDirective>
           <Inject services={[Page, Filter, Toolbar, PdfExport, ExcelExport]} />
