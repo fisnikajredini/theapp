@@ -92,6 +92,14 @@ app.get("/getcategory", (req, res) => {
   });
 });
 
+app.post("/deletecategory", (req, res) => {
+  console.log(req.body);
+  queries.removeDoc(req.body.delfirma);
+  // .then((data) => {
+  //   res.json({ data: data });
+  // });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
