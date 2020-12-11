@@ -115,3 +115,15 @@ a {
 .resulttable {
   max-width: 1700px !important;
 }
+.k-grid td{
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important; 
+  max-width : 250px !important;
+}
+
+.k-grid table {
+  table-layout: fixed !important;
+}
+.k-grid td:hover {
+  white-space: inherit !important;
+}

@@ -73,6 +73,7 @@ const Delovodnikdoc = mongoose.model(
         company_name: String,
         category:String,
         subCategory:String,
+        subsubCategory:String,
         date: String,
         Life:Number,
     },

@@ -63,6 +63,7 @@ app.post("/addcategory", (req, res) => {
   let company_name = req.body.company_name;
   let category = req.body.category.categoryName;
   let subCategory = req.body.subCategory;
+  let subsubCategory = req.body.subsubCategory;
   let categoryLife = req.body.categoryLife;
   let current_datetime = new Date();
   let formatted_date =
@@ -77,6 +78,7 @@ app.post("/addcategory", (req, res) => {
       company_name: company_name,
       category: category,
       subCategory: subCategory,
+      subsubCategory: subsubCategory,
       date: formatted_date,
       Life: categoryLife,
     })

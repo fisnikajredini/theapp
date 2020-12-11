@@ -3,7 +3,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import RaisedButton from "material-ui/RaisedButton";
 import { Link } from "react-router-dom";
 import { DropDownList } from "@progress/kendo-react-dropdowns";
-import { dataCategories, dataSubcat } from "./data.js";
+import { dataCategories, dataSubcat, dataSubsubcat } from "./data.js";
 import "./dropdown.css";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -11,6 +11,8 @@ import Swal from "sweetalert2";
 const defaultItemCompany = { company_name: "Селектирај Фирма ..." };
 const defaultItemCategory = { categoryName: "Селектирај Категорија ..." };
 const defaultItemSubcat = { subcatName: "Селектирај Под-Категорија ..." };
+const defaultItemSubsubcat = { subsubcatName: "Селектирај Под-Категорија ..." };
+
 let companyNames = [];
 class AppComponent extends React.Component {
   constructor(props) {
@@ -19,12 +21,16 @@ class AppComponent extends React.Component {
       companyNames: this.props.companyNames,
       category: null,
       subcat: null,
+      subsubcat: null,
       subcats: dataSubcat,
+      subsubcats: dataSubsubcat,
       categoryNode: null,
       subcategoryNode: null,
+      subsubcategoryNode: null,
       companyNode: "FIRMA 7",
       company_name: null,
       subCategory: null,
+      subsubCategory: null,
       categoryLife: null,
     };
   }
@@ -44,7 +50,6 @@ class AppComponent extends React.Component {
     const subcats = dataSubcat.filter(
       (subcat) => subcat.categoryId === category.categoryId
     );
-
     this.setState({
       category: category,
       subcats: subcats,
@@ -55,18 +60,29 @@ class AppComponent extends React.Component {
     const subcat = event.target.value;
     const subCategory = event.target.value.subcatName;
     const categoryLife = event.target.value.categoryTime;
+    const subsubcats = dataSubsubcat.filter(
+      (subsubcat) => subsubcat.subcatId === subcat.subcatId
+    )
     console.log(subcat);
     this.setState({
       subcat: subcat,
       subCategory: subCategory,
+      subsubcats: subsubcats,
+      subsubcat: null,
       categoryLife: categoryLife,
     });
+  };
+  subsubcatChange = (event) => {
+    this.setState({ subsubcat: event.target.value });
   };
   addPage = () => {
     if (
       this.state.subCategory === null ||
+      // this.state.subsubCategory === null ||
       this.state.subCategory === "" ||
-      this.state.subCategory === undefined
+      this.state.subsubCategory === "" ||
+      this.state.subCategory === undefined ||
+      this.state.subsubCategory === undefined
     ) {
       Swal.fire({
         icon: "error",
@@ -81,6 +97,7 @@ class AppComponent extends React.Component {
           category: this.state.category,
           company_name: this.state.company_name,
           subCategory: this.state.subCategory,
+          subsubCategory: this.state.subsubCategory,
           categoryLife: this.state.categoryLife,
         })
         .then((res) => {
@@ -99,9 +116,12 @@ class AppComponent extends React.Component {
   };
 
   render() {
+    const companyNames = this.state.company_name;
     const category = this.state.category;
     const subcat = this.state.subcat;
+    const subsubcat = this.state.subsubcat;
 
+    const hasCompanyname = companyNames && companyNames !== defaultItemCompany;
     const hasCategory = category && category !== defaultItemCategory;
     const hasSubcat = subcat && subcat !== defaultItemSubcat;
 
@@ -126,6 +146,7 @@ class AppComponent extends React.Component {
               <div style={{ display: "inline-block" }}>
                 <p className="Title">Категорија</p>
                 <DropDownList
+                  disabled={!hasCompanyname}
                   data={dataCategories}
                   textField="categoryName"
                   onChange={this.categoryChange}
@@ -142,6 +163,18 @@ class AppComponent extends React.Component {
                   textField="subcatName"
                   onChange={this.subcatChange}
                   defaultItem={defaultItemSubcat}
+                  // value={dataSubcat}
+                />
+              </div>
+              <br />
+              <div style={{ display: "inline-block" }}>
+                <p className="Title">Под-Категорија</p>
+                <DropDownList
+                  disabled={!hasSubcat}
+                  data={this.state.subsubcats}
+                  textField="subsubcatName"
+                  onChange={this.subsubcatChange}
+                  defaultItem={defaultItemSubsubcat}
                   // value={dataSubcat}
                 />
               </div>

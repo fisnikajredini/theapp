@@ -32,14 +32,14 @@ export default class SearchPage extends React.Component {
     />
   );
   gridPDFExport;
-  total = sampleProducts.length;
+  total = sampleProducts.length; //kjo a duhet t jese me datat e this.state.categories ?
   pageSize = 15;
   _export;
   export = () => {
     this._export.save();
   };
   state = {
-    data: sampleProducts.slice(0, this.pageSize),
+    data: sampleProducts.slice(0, this.pageSize), // ene kjo a duhet t jese me datat e this.state.categories ?
     skip: 0,
     exporting: false,
   };
@@ -59,6 +59,7 @@ export default class SearchPage extends React.Component {
       >
         <Grid
           data={this.state.categories}
+          filterable={true}
           pageable={true}
           onPageChange={this.pageChange}
           pageSize={this.pageSize}
@@ -82,12 +83,13 @@ export default class SearchPage extends React.Component {
               Export to Excel
             </button>
           </GridToolbar>
-          <Column field="company_name" title="Фирма" />
-          <Column field="category" title="Категорија" />
+          <Column field="company_name" title="Фирма" width="150"/>
+          <Column field="category" title="Категорија" width="200"/>
           <Column field="subCategory" title="Под-Категорија" />
-          <Column field="date" title="Датум" />
-          <Column field="Life" title="Рок на чување" />
-          <Column cell={this.CommandCell} width="200px" />
+          <Column field="subsubCategory" title="Под-Категориjа" />
+          <Column field="date" title="Датум" width="150"/>
+          <Column field="Life" title="Рок на чување" width="120"/>
+          <Column cell={this.CommandCell} width="120px" />
         </Grid>
       </ExcelExport>
     );
@@ -113,7 +115,7 @@ export default class SearchPage extends React.Component {
       data: sampleProducts.slice(skip, skip + take),
       skip: skip,
     };
-  }
+  };
 
   exportPDF = () => {
     this.gridPDFExport.save(this.state.data, this.pdfExportDone);
